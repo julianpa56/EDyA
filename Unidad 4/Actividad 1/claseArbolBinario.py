@@ -51,14 +51,19 @@ class ArbolBinario:
             print("Error en la insercion")
             return None
 
-    def hijo(self,hijo,padre):
-        respuesta= False
+    def _buscar(self,item):
         aux= self.raiz()
-        while aux != None and aux.obtenerItem() != padre:
-            if aux.obtenerItem() < padre:
+
+        while aux != None and aux.obtenerItem() != item:
+            if aux.obtenerItem() < item:
                 aux= aux.obtenerIzq()
             else:
                 aux= aux.obtenerDer()
+        return aux
+
+    def hijo(self,hijo,padre):
+        respuesta= False
+        aux= self._buscar(padre)
         if aux == None:
             print("Error - Padre no encontrado")
             respuesta= False
@@ -72,17 +77,6 @@ class ArbolBinario:
 
     def padre(self,padre,hijo):
         return self.hijo(hijo,padre)
-
-    def _buscar(self,item):
-        aux= self.raiz()
-
-        while aux != None and aux.obtenerItem() != item:
-            if aux.obtenerItem() < item:
-                aux= aux.obtenerIzq()
-            else:
-                aux= aux.obtenerDer()
-        return aux
-
 
     def buscar(self,item):
         aux= self._buscar(item)
@@ -103,3 +97,32 @@ class ArbolBinario:
         else:
             respuesta= False
         return respuesta
+
+    def camino(self,nodoA,nodoB):
+        aux= self._buscar(nodoA)
+        aux2= self._buscar(nodoB)
+        if aux==None or aux2==None:
+            print("Error - El primer item no existe")
+        else:
+            b=True
+            while aux !=None and b:
+                if aux.obtenerItem() == nodoB:
+                    b= False
+                elif aux.obtenerItem() < nodoB:
+                    aux= aux.obtenerIzq()
+                else:
+                    aux= aux.obtenerDer()
+            if b:
+                print("No existe camino entre ",nodoA," y el nodo ",nodoB)
+            else:
+                print("Existe camino entre ",nodoA," y el nodo ",nodoB)
+
+    def inOrden(self):
+        aux= self.raiz()
+        self._inOrden(aux)
+
+    def _inOrden(self,nodo):
+        if nodo!=None:
+            self._inOrden(nodo.obtenerDer())
+            print(nodo.obtenerItem())
+            self._inOrden(nodo.obtenerIzq())

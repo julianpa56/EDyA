@@ -15,4 +15,4 @@ if __name__=='__main__':
     arbol.insertar(47)
     arbol.insertar(35)
     arbol.insertar(68)
-    print(arbol.hijo(100,92))
+    arbol.inOrden()
