@@ -1,16 +1,19 @@
+from pila import Pila
+
 
 def convertirABinario(numero):
     
-    binarioInverso=[]
+    pilaBinaria= Pila()
+    pilaBinaria.Crear()
 
     while numero != 0:
         modulo= numero % 2
         cociente= numero // 2
-        binarioInverso.append(modulo)
+        pilaBinaria.Insertar(modulo)
         numero= cociente
-    binario=[]
-    for i in reversed(binarioInverso):
-        binario.append(i)
+        print("Cociente : {} - modulo: {}".format(cociente,modulo))
     
-
-    return "".join(map(str, binario))
+    binario=''
+    while not pilaBinaria.Vacia():
+        binario+= str(pilaBinaria.Suprimir())
+    return binario
