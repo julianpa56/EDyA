@@ -210,6 +210,7 @@ class ArbolBinario:
         if nodo!=None:
             aux1=self._altura(nodo.obtenerIzq(),i+1)
             aux2=self._altura(nodo.obtenerDer(),i+1)
+            print("aux1: ",aux1," - aux2: ",aux2)
             return max(aux1,aux2)
         else:
             return i

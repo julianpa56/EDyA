@@ -19,3 +19,4 @@ if __name__=='__main__':
     arbol.insertar(88)
     arbol.insertar(68)
     arbol.suprimir(85)
+    print(arbol.altura())
