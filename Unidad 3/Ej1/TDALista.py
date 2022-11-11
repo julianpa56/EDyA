@@ -4,26 +4,23 @@
 class ListaSecuencial:
     __lista= []
     __tamanio= 0
-    __ultimo= -1
+    __ultimo= 0
 
     def __init__(self) -> None:
         self.__lista=[]
-        self.__ultimo=-1
+        self.__ultimo=0
 
     def Insertar(self,elemento,pos):
-        respuesta=False
-        if pos-1 <= self.__ultimo+1 and self.__ultimo < self.__tamanio-1:
-            actual=self.__lista[pos-1]
-            self.__lista[pos-1]=elemento
-            siguiente= None
-            while pos <= self.__ultimo:
-                siguiente= self.__lista[pos]
-                self.__lista[pos]=actual
-                actual= siguiente
-                pos+=1
-            respuesta= True
+        if pos-1== self.__ultimo and self.__ultimo==0:
+            self.__lista[0]=elemento
             self.__ultimo+=1
-        return respuesta
+        elif pos-1 == self.__ultimo:
+            self.__lista[pos-1]=elemento
+            self.__ultimo+=1  
+        elif pos-1>=0 and pos-1 <= self.__ultimo-1:
+            actual=self.__lista[pos-1]
+            siguiente= self.Siguiente(pos-1)
+            
             
     def Suprimir(self,pos):
         respuesta= False
@@ -47,7 +44,7 @@ class ListaSecuencial:
             respuesta=self.__lista[0]
         return respuesta
 
-    def Ultimo_elemento(self,L):
+    def Ultimo_elemento(self):
         respuesta=-1
         if self.__ultimo> -1:
             respuesta= self.__lista[self.__ultimo]
@@ -55,7 +52,7 @@ class ListaSecuencial:
 
     def Siguiente(self,pos):
         respuesta=-1
-        if pos-1 < self.__ultimo:
+        if pos-1 < self.__ultimo+1:
             respuesta= self.__lista[pos]
         return respuesta
 
@@ -70,8 +67,7 @@ class ListaSecuencial:
 
     def Crear(self,lon):
         self.__lista=[None]*int(lon)
-        self.__ultimo=-1
-        self.__tamanio= lon
+        self.__ultimo=0
 
     def Vacia(self):
         return (self.__lista[0] == None)
