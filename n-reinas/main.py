@@ -1,4 +1,5 @@
 import numpy as np
+import os 
 from tkinter import *
 
 class Reina():
@@ -11,6 +12,12 @@ class Reina():
     
     def getY(self):
         return self.__y
+    
+    def __str__(self) -> str:
+        return ("({},{})".format(self.__x,self.__y))
+    
+    def __repr__(self) -> str:
+        return ("({},{})".format(self.__x,self.__y))
 
 
 class Tablero(Tk):
@@ -33,6 +40,7 @@ class Tablero(Tk):
                 if self.tab[j][i]==1:
                     self.tablero.create_oval(i*80+20,j*80+20,(i+1)*80-20,(j+1)*80-20,fill="white")
     def colocarReina(self,reinas,x,y):
+        resp=True
         if x<=n and y<=n: # PREGUNTA SI LAS COORDENADAS ESTAN DENTRO DEL TABLERO DE ORDEN NxN
             nuevaReina= Reina(x,y)
             if self.verificarReina(reinas,nuevaReina): # SI NO HAY COLISION AGREGA LA REINA EN LA TABLA Y EN LA LISTA DE REINAS
@@ -40,8 +48,11 @@ class Tablero(Tk):
                 self.tab[x-1][y-1]=1
             else:
                 print("Colision de reinas")
+                resp=False
         else:
             print("Error - coordenadas erroneas")
+            resp=False
+        return resp
 
     def verificarReina(self,reinas,aux):
         resp=True
@@ -49,8 +60,8 @@ class Tablero(Tk):
         i=len(reinas)-1
         while b and i>-1:
             if (aux.getX()!= reinas[i].getX())and(aux.getY()!= reinas[i].getY()): # VERIFICA QUE NO ESTEN EN LA MISMA FILA O COLUMNA
-                if abs(aux.getX()+aux.getY())!= abs(reinas[i].getX()+reinas[i].getY()): # VERIFICA QUE NO ESTEN EN LA MISMA DIAGONAL POSITIVA
-                    if abs(aux.getX()-aux.getY())!= abs(reinas[i].getX()-reinas[i].getY()): # VERIFICA QUE NO ESTEN EN LA MISMA DIAGONAL NEGATIVA
+                if aux.getX()+aux.getY()!= reinas[i].getX()+reinas[i].getY(): # VERIFICA QUE NO ESTEN EN LA MISMA DIAGONAL POSITIVA
+                    if aux.getX()-aux.getY()!= reinas[i].getX()-reinas[i].getY(): # VERIFICA QUE NO ESTEN EN LA MISMA DIAGONAL NEGATIVA
                         i-=1
                     else:
                         b=False
@@ -65,13 +76,15 @@ class Tablero(Tk):
 
 
 if __name__=='__main__':
-    n=6 # ORDEN DEL TABLERO NxN
+    os.system("cls")
+    n=4 # ORDEN DEL TABLERO NxN
     reinas=[]
     app=Tablero()
-
-    app.colocarReina(reinas,1,1)
-    app.colocarReina(reinas,4,3)
-    app.colocarReina(reinas,2,6)
+    # app.colocarReina(reinas,1,4)
+    # app.colocarReina(reinas,2,2)
+    # app.colocarReina(reinas,3,3)
+    # app.colocarReina(reinas,4,2)
+    # app.colocarReina(reinas,5,3)
     app.cuadrado()
     app.dibujarReinas()
     app.mainloop()

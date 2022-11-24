@@ -1,34 +1,49 @@
 
+import numpy as np
 
 
 class ColaSecuencial:
-    __cola= []
+    __cola= None
+    __tamanio= 0
+    __cantidad=0
+    __incremento=1
 
 
     def __init__(self) -> None:
-        pass
+        self.__cola= None
+        self.__tamanio= 0
+        self.__cantidad=0
+        self.__incremento=1
 
-    def Crear(self):
-        self.__cola=[]
+    def Crear(self, cantidad):
+        self.__cola= np.empty(cantidad)
+        self.__tamanio= cantidad
     
     def Vacia(self):
         respuesta= False
-        if len(self.__cola)==0:
+        if self.__cantidad==0:
             respuesta= True
         return respuesta
     
-    def Insertar(self,elemento):
-        self.__cola.append(elemento)
+    def Insertar(self,elemento):        
+        if self.__cantidad==self.__tamanio:
+            self.__tamanio+=self.__incremento
+            self.__cola.resize(self.__tamanio)
+        self.__cola[self.__cantidad]=elemento
+        self.__cantidad+=1
     
     def Suprimir(self):
-        respuesta= -1
+        respuesta= None
         if not self.Vacia():
-            respuesta= self.__cola.pop(0)
+            respuesta= self.__cola[0]
+            i=1
+            while i < self.__cantidad:
+                self.__cola[i-1]=self.__cola[i]
+                i+=1
+            self.__cantidad-=1
         return respuesta
 
     def Recorrer(self):
-        i=1
-        for elemento in self.__cola:
-            print("Posicion en la fila: ",i," - Elemento: ", elemento)
-            i+=1
-            
+        
+        for i in range(self.__cantidad):
+            print("Posicion en la fila: ",i+1," - Elemento: ", self.__cola[i])
